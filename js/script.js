@@ -33,7 +33,7 @@ $(document).ready(function () {
       id: "04_choice",
       content: `
   <div id="card-draw-container">
-    <img src="img/_choice_light01.png" id="choicebackgrounnd-img">
+    <img src="img/choice_light01.png" id="choicebackgrounnd-img">
     <!-- 텍스트: 부채꼴 전용 텍스트 (위쪽) -->
     <p id="choice-text-top" class="hidden">카드를 골라주세요</p>
     
@@ -134,7 +134,7 @@ $(document).ready(function () {
     for (let i = 0; i < numberOfStars; i++) {
       const starSize = Math.random() * 200 + 50; // 별 크기: 20px ~ 70px
       const star = $("<img>")
-        .attr("src", "img/_cover_burble.png") // 별 이미지 경로
+        .attr("src", "img/cover_burble.png") // 별 이미지 경로
         .addClass("star") // 별 클래스 추가
         .css({
           position: "absolute",
