@@ -5,14 +5,13 @@ $(document).ready(function () {
       id: "01_cover",
       content: `
       <div id="cover-background">
-        <img src="img/cover_tarot.png" id="covertarot-img">
-        <img src="img/coverbackgroundimg.png" id="coverbackground-img">
-        <div id="cover-content">
-          <p id="cover-text">
-            바닷속 인어가 들려주는 단 한 장의 카드, <br> 오늘의 운세를 점치러 가볼까요?
-          </p>
-          <button id="start-btn">시작하기</button>
-        </div>
+        <img src="img/cover_backgrounnd.png" id="coverbackgrounnd-img">
+        <img src="img/cover_title.png" id="covertitle-img">
+
+        <!-- 별 이미지 컨테이너 -->
+        <div id="star-container"></div>
+
+        <button id="start-btn">START</button>
       </div>
       `,
     },
@@ -33,17 +32,21 @@ $(document).ready(function () {
     {
       id: "04_choice",
       content: `
-      <div id="card-draw-container">
-          <p id="choice-text">
-            카드를 골라주세요.
-          </p>
-          <img src="img/Polygon.png" id="polygon-img">
-        <img src="img/card99.png" id="single-card" alt="Card">
-        <div id="fan-cards-container"></div>
-      </div>`,
+  <div id="card-draw-container">
+    <img src="img/_choice_light01.png" id="choicebackgrounnd-img">
+    <!-- 텍스트: 부채꼴 전용 텍스트 (위쪽) -->
+    <p id="choice-text-top" class="hidden">카드를 골라주세요</p>
+    
+    <!-- 양 옆에 텍스트: 기본 상태 -->
+    <div id="choice-text-left" class="choice-text-side">카드를</div>
+    <img src="img/card99.png" id="single-card" alt="Card">
+    <div id="choice-text-right" class="choice-text-side">눌러보세요</div>
+
+    <!-- 부채꼴 카드 -->
+    <div id="fan-cards-container"></div>
+  </div>`,
     },
     { id: "05_menu", content: `` },
-    { id: "06_extra", content: `` },
   ];
 
   let currentPageIndex = 0; // 현재 페이지 인덱스
@@ -123,7 +126,34 @@ $(document).ready(function () {
     }
   }
 
-  // 온보딩 페이지 전용 이벤트 처리
+  // 별 이미지 애니메이션 함수
+  function createStarAnimation() {
+    const starContainer = $("#star-container");
+    const numberOfStars = 10; // 별 이미지 개수
+
+    for (let i = 0; i < numberOfStars; i++) {
+      const starSize = Math.random() * 200 + 50; // 별 크기: 20px ~ 70px
+      const star = $("<img>")
+        .attr("src", "img/_cover_burble.png") // 별 이미지 경로
+        .addClass("star") // 별 클래스 추가
+        .css({
+          position: "absolute",
+          top: `${Math.random() * 100}%`,
+          left: `${Math.random() * 100}%`,
+          width: `${starSize}px`, // 랜덤한 별 크기
+          animationDelay: `${Math.random() * 3}s`, // 애니메이션 딜레이
+        });
+
+      starContainer.append(star);
+    }
+  }
+
+  // 01_cover 페이지에서 별 애니메이션 실행
+  function addCoverEvents() {
+    createStarAnimation();
+  }
+
+  // 02_온보딩 페이지 전용 이벤트 처리
   function addOnboardingEvents() {
     let lastX = null; // 이전 마우스 위치
     let direction = null; // 현재 방향 ("left" 또는 "right")
@@ -159,7 +189,7 @@ $(document).ready(function () {
     });
   }
 
-  // 셔플 페이지 전용 이벤트 처리
+  // 03_셔플 페이지 전용 이벤트 처리
   function addShuffleEvents() {
     let moveCount = 0; // 마우스 이동 횟수
     const maxMoves = 3; // 최대 이동 횟수
@@ -250,7 +280,7 @@ $(document).ready(function () {
     }
   }
 
-  // 선택 페이지 전용 이벤트 처리
+  // 04_선택 페이지 전용 이벤트 처리
   function addChoiceEvents() {
     const totalCards = 7; // 펼칠 카드의 개수
     let isCardFanned = false; // 카드가 펼쳐졌는지 여부
@@ -258,7 +288,11 @@ $(document).ready(function () {
     // 단일 카드 클릭 이벤트
     $("#single-card").on("click", function () {
       if (!isCardFanned) {
-        $("#single-card").hide(); // 기존 카드 숨기기
+        // 카드 숨기기, 텍스트 업데이트
+        $("#single-card").hide();
+        $(".choice-text-side").addClass("hidden"); // 양옆 텍스트 숨기기
+        $("#choice-text-top").removeClass("hidden"); // 위쪽 텍스트 표시
+
         fanOutCards();
         isCardFanned = true;
       }
@@ -270,35 +304,37 @@ $(document).ready(function () {
       container.empty(); // 기존 카드 삭제
       container.show();
 
+      // 배경 이미지 확대 클래스 추가
+      $("#choicebackgrounnd-img").addClass("fan-expanded");
+
       const startAngle = -60; // 시작 각도 (더 넓게 펼치기 위해 -60도로 조정)
-      const angleStep = 20; // 각 카드당 회전 각도 간격을 20도로 조정 (더 넓게 퍼짐)
+      const angleStep = 20; // 각 카드당 회전 각도 간격을 20도로 조정
 
       for (let i = 0; i < totalCards; i++) {
-        const angle = startAngle + i * angleStep; // 각 카드의 회전 각도
-        const delay = i * 0.1; // 각 카드의 애니메이션 딜레이 (0.1초씩 순차 적용)
+        const angle = startAngle + i * angleStep;
+        const delay = i * 0.1;
 
         const card = `
           <img src="img/card99.png" class="fan-card" 
                style="
                  position: absolute;
-                 top: 50%; /* 화면의 세로 중앙 */
-                 left: 50%; /* 화면의 가로 중앙 */
-                 transform-origin: bottom center; /* 회전 기준점 */
-                 transform: translate(-50%, -50%) rotate(${angle}deg); /* 정확한 중앙 정렬 */
+                 top: 50%; 
+                 left: 50%; 
+                 transform-origin: bottom center;
+                 transform: translate(-50%, -50%) rotate(${angle}deg);
                  opacity: 0;
                  transition: transform 0.6s ease-out ${delay}s, opacity 0.6s ease-out ${delay}s;
                ">
         `;
-
         container.append(card);
       }
 
-      // 부채꼴 카드 애니메이션 실행 (위로 올라오면서 보임)
+      // 부채꼴 카드 애니메이션 실행
       setTimeout(() => {
         $(".fan-card").each(function (index) {
-          const angle = startAngle + index * angleStep; // 다시 angle 계산
+          const angle = startAngle + index * angleStep;
           $(this).css({
-            transform: `translate(-50%, -100px) rotate(${angle}deg)`, // 최종 위치
+            transform: `translate(-50%, -100px) rotate(${angle}deg)`,
             opacity: 1,
           });
         });
@@ -309,9 +345,9 @@ $(document).ready(function () {
     const popupHtml = `
   <div id="popup-overlay">
     <div id="popup-container">
-      <p>당신의 카드가 맞나요?</p>
+      <p>정말 이게 당신의 카드인가요?</p>
       <div id=""popup-buttons>
-          <button id="btn-reselect" class="popup-btn">다시 선택할래요</button>
+          <button id="btn-reselect" class="popup-btn">다시 해볼까?</button>
           <button id="btn-confirm" class="popup-btn">네!</button>
       </div>
     </div>
@@ -538,7 +574,7 @@ $(document).ready(function () {
     },
   ];
 
-  // 메뉴 이벤트 처리
+  // 05_메뉴 이벤트 처리
   function addMenuEvents() {
     const card = getRandomCard(); // 랜덤 카드 가져오기
     const cardImageSrc = `img/card-arcana/card${String(card.id).padStart(
@@ -547,26 +583,37 @@ $(document).ready(function () {
     )}.png`;
 
     // 메뉴 화면 렌더링
+    // 05_menu 화면 렌더링
     const menuHTML = `
-    <div id="card-display-container" style="text-align: center; padding: 20px;">
-      <img src="${cardImageSrc}" alt="${card.name}" style="width: 150px; height: auto; margin-bottom: 20px;">
-      <h2>${card.id}. ${card.name} (${card.koreanName})</h2>
-      <div id="button-container" style="margin-top: 20px;">
-        <button class="menu-popup-btn" data-title="오늘의 아이템" data-content="${card.item}">오늘의 아이템</button>
-        <button class="menu-popup-btn" data-title="오늘의 키워드" data-content="${card.keyword}">오늘의 키워드</button>
-        <button class="menu-popup-btn" data-title="오늘의 운세" data-content="${card.fortune}">오늘의 운세</button>
+  <div id="menu-container">
+    <!-- 상단 텍스트 -->
+    <p id="menu-top-text">당신의 카드는 바로</p>
+  
+    <div id="menu-card">
+      <img src="${cardImageSrc}" alt="${card.name}" id="menu-card-image">
+    </div>
+  
+    <div id="menu-content">
+      <p id="menu-card-number">No. ${card.id}</p>
+      <h1 id="menu-card-title">${card.name} <span id="menu-card-korean">${card.koreanName}</span></h1>
+      <div id="menu-button-container">
+       <button class="menu-popup-btn" data-title="오늘의 아이템" data-content="${card.item}">오늘의 아이템</button>
+       <button class="menu-popup-btn" data-title="오늘의 키워드" data-content="${card.keyword}">오늘의 키워드</button>
+       <button class="menu-popup-btn" data-title="오늘의 운세" data-content="${card.fortune}">오늘의 운세</button>
       </div>
     </div>
+  </div>
 
-    <!-- 팝업 오버레이 -->
-    <div id="menu-popup-overlay">
-      <div id="menu-popup-container">
-        <p id="menu-popup-content"></p>
-        <button id="close-popup-btn">닫기</button>
-      </div>
+<!-- 하단 텍스트 -->
+<p id="menu-bottom-text">인어의 카드가 마음에 안든다면~?</p>
+
+  <div id="menu-popup-overlay">
+    <div id="menu-popup-container">
+      <p id="menu-popup-content"></p>
+      <button id="close-popup-btn">닫기</button>
     </div>
-  `;
-
+  </div>
+`;
     $("#web").html(menuHTML);
 
     // 팝업 버튼 클릭 이벤트
@@ -600,6 +647,10 @@ $(document).ready(function () {
 
     $("#web").html(`${imgHtml}${currentPage.content}`); // 이미지와 콘텐츠 추가
 
+    if (currentPage.id === "01_cover") {
+      addCoverEvents(); // 온보딩 페이지 이벤트 추가
+    }
+
     if (currentPage.id === "02_onboarding") {
       addOnboardingEvents(); // 온보딩 페이지 이벤트 추가
     }
@@ -630,9 +681,16 @@ $(document).ready(function () {
       $("#prev-btn").show();
     }
 
+    // 이전 버튼 텍스트 변경
+    if (currentPageIndex === pages.length - 1) {
+      $("#prev-btn").text("다시뽑기");
+    } else {
+      $("#next-btn").text("이전");
+    }
+
     // 다음 버튼 텍스트 변경
     if (currentPageIndex === pages.length - 1) {
-      $("#next-btn").text("다시 뽑아보기");
+      $("#next-btn").text("처음으로");
     } else {
       $("#next-btn").text("다음");
     }

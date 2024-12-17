@@ -48,12 +48,8 @@ main {
   position: relative; /* 자식 요소의 위치 설정 기준 */
   flex: 1; /* 헤더와 푸터를 제외한 영역 채우기 */
   text-align: center;
-  background: linear-gradient(
-    135deg,
-    #e4c2fb,
-    #e0ebf4,
-    #d0dbf3
-  ); /* 그라데이션 배경 */
+  background: linear-gradient(-45deg, #e4c2fb, #e0ebf4, #d0dbf3, #f4ceff);
+
   color: white; /* 텍스트 색상 */
   height: calc(100vh - 50px); /* 화면 전체 높이에서 footer 높이를 제외 */
   display: flex;
@@ -61,6 +57,21 @@ main {
   align-items: center; /* 중앙 정렬 */
   box-sizing: border-box; /* 패딩과 보더 포함 */
   overflow: hidden; /* 콘텐츠로 인해 스크롤이 생기지 않도록 설정 */
+  background-size: 400% 400%;
+  animation: gradientBG 7s ease infinite;
+}
+
+/* 그라데이션 애니메이션 */
+@keyframes gradientBG {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* 01Cover Background */
@@ -72,67 +83,68 @@ main {
 }
 
 /* 배경 이미지 */
-#coverbackground-img {
+#coverbackgrounnd-img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%; /* 화면 전체를 채움 */
   object-fit: cover; /* 비율 유지하며 채우기 */
-  z-index: 1; /* 가장 아래 레이어 */
+  z-index: 0; /* 가장 아래 레이어 */
+}
+
+/* 별 애니메이션 스타일 */
+.star {
+  opacity: 0; /* 초기 투명도 */
+  animation: floatStar 5s infinite ease-in-out; /* 별 움직임 애니메이션 */
+}
+
+@keyframes floatStar {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
 }
 
 /* 타로 이미지 */
-#covertarot-img {
+#covertitle-img {
   position: absolute;
-  top: 30%;
-  left: 50%;
+  top: 40%;
   transform: translate(-50%, -50%); /* 부모 기준 중앙 정렬 */
-  width: 80%; /* 적절한 크기 설정 */
+  width: 70%; /* 적절한 크기 설정 */
   height: auto; /* 비율 유지 */
   object-fit: cover;
   z-index: 10; /* 배경 위에 표시 */
 }
 
-/* Cover Content */
-#cover-content {
-  position: absolute;
-  width: 60%;
-  top: 60%; /* 부모 높이의 50% 아래로 이동 */
-  left: 50%; /* 부모 너비의 50% 오른쪽으로 이동 */
-  transform: translate(-50%, -50%); /* 중앙 정렬 */
-  text-align: center;
-  padding: 20px;
-  z-index: 100; /* 가장 위 레이어 */
-  background-color: rgba(255, 255, 255); /* 배경 투명도 적용 */
-  border-radius: 40px; /* 둥근 모서리 */
-}
-
-#cover-text {
-  font-size: 22px;
-  font-family: "Diphylleia", sans-serif; /* 어쩌구.. 서체 적용 */
-  margin-bottom: 30px;
-  color: #6606a5;
-  line-height: 1.5;
-}
-
 /* 시작하기 버튼 */
 #start-btn {
+  position: absolute;
+  top: 67%;
+  transform: translate(-50%, -50%); /* 부모 기준 중앙 정렬 */
   padding: 15px 30px;
-  font-family: "Gamja Flower", cursive; /* 감자 플라워 서체 적용 */
-  font-size: 32px;
-  background-color: #44374d;
-  color: white;
-  border: 4px solid #c9e7d8; /* 두꺼운 테두리 추가 */
-  border-radius: 40px;
-  border-color: #e4c2fb;
+  width: 20%;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  font-size: 50px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: #b9d7ff;
   cursor: pointer;
   transition: background-color 0.3s ease;
   z-index: 10; /* 버튼이 다른 요소 위에 표시되도록 설정 */
 }
 
 #start-btn:hover {
-  background-color: #aa92b9;
+  background-color: #f3e1ff;
 }
 
 /* 02 Onboarding */
@@ -150,8 +162,8 @@ main {
 
 /* Onboarding Text */
 #onboarding-text {
-  font-size: 20px;
-  font-family: "Diphylleia", sans-serif; /* 서체 적용 */
+  font-size: 24px;
+  font-family: "NanumBarunpen-Bold", Helvetica;
   margin-bottom: 20px; /* 아래 간격 */
   color: #0e0d0f;
   line-height: 1.5;
@@ -168,9 +180,9 @@ main {
 /* 설명 텍스트 */
 #onboarding-explaintext {
   font-size: 18px;
-  font-family: "Diphylleia", sans-serif; /* 서체 적용 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
   margin-bottom: 20px; /* 아래 간격 */
-  color: #0e0d0f;
+  color: #858586;
   line-height: 1.5;
   text-align: center; /* 텍스트 중앙 정렬 */
 }
@@ -179,11 +191,12 @@ main {
 #onboarding-btn {
   padding: 15px 30px;
   font-family: "Gamja Flower", cursive; /* 감자 플라워 서체 적용 */
-  font-size: 32px;
-  background-color: #e4e4e4;
-  color: #181317;
-  border: 4px solid #c5c5c5; /* 두꺼운 테두리 추가 */
-  border-radius: 40px;
+  font-size: 20px;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  background-color: #ffffff;
+  border-radius: 20px;
+  border: 4px solid;
+  border-color: #b9d7ff;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease; /* 애니메이션 추가 */
   margin-top: 20px; /* 위쪽 여백 */
@@ -191,8 +204,8 @@ main {
 
 /* 버튼 활성화 상태 */
 #onboarding-btn.activated {
-  background-color: #f4ceff; /* 활성화된 배경색 */
-  border-color: #f9f1f7; /* 활성화된 테두리 색상 */
+  background-color: #f3e1ff; /* 활성화된 배경색 */
+  border-color: #b9d7ff; /* 활성화된 테두리 색상 */
   transform: scale(1.1); /* 살짝 확대 효과 */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
 }
@@ -232,7 +245,7 @@ main {
   text-align: center;
   margin-top: 10px;
   font-size: 18px;
-  font-family: "Gamja Flower", cursive; /* 감자 플라워 서체 적용 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
   color: #44374d;
 }
 
@@ -260,19 +273,19 @@ main {
   bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: "Gamja Flower", cursive; /* 서체 적용 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
   padding: 10px 20px;
   font-size: 18px;
-  background-color: #44374d;
-  color: white;
-  border: 2px solid #c9e7d8;
+  background-color: #ffffff;
+  border: 4px solid;
+  border-color: #b9d7ff;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 #next-btn-shuffle:hover {
-  background-color: #704f87;
+  background-color: #f3e1ff;
   transform: translateX(-50%) scale(1.05); /* 버튼 확대 효과 */
 }
 
@@ -282,35 +295,84 @@ main {
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  flex-direction: row; /* 가로로 나열 (기본값이므로 생략 가능) */
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
   overflow: hidden;
 }
 
-#choice-text {
+/* 기본 배경 이미지 스타일 (single-card 상태) */
+#choicebackgrounnd-img {
   position: absolute;
-  color: #6606a5;
-  top: 30%;
-  font-family: "Diphylleia", sans-serif; /* 서체 적용 */
-  font-size: 24px; /* 텍스트 크기 설정 (픽셀 단위) */
-  text-align: center; /* 가운데 정렬 (선택사항) */
+  top: 0;
+  left: 30.5%;
+  width: auto;
+  height: 100%; /* 초기 상태: 화면 전체 높이 */
+  object-fit: cover; /* 이미지 비율 유지 */
+  transition: all 0.5s ease; /* 부드러운 전환 효과 */
 }
 
-#polygon-img {
+/* fan-card 상태 (배경 이미지 2배 크기) */
+#choicebackgrounnd-img.fan-expanded {
+  transform: scale(1.5); /* 배경 이미지 2배 확대 */
+  transform-origin: center; /* 확대 기준점 중앙 */
+}
+
+/* 기본 텍스트 - 양옆 */
+.choice-text-side {
   position: absolute;
   top: 50%;
-  width: 30%;
-  height: auto;
-  margin-bottom: 20px; /* 텍스트와 간격 */
+  transform: translateY(-50%);
+  font-size: 30px;
+  color: #44364e;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+}
+
+#choice-text-left {
+  left: 20%; /* 왼쪽 여백 */
+}
+
+#choice-text-right {
+  right: 20%; /* 오른쪽 여백 */
+}
+
+/* 부채꼴 시 텍스트 */
+#choice-text-top {
+  position: absolute;
+  top: 30%; /* 상단 여백 */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30px;
+  color: #44364e;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+}
+
+.hidden {
+  display: none; /* 숨김 상태 */
 }
 
 #single-card {
-  width: 86px;
-  height: 172px;
-  cursor: pointer;
   position: absolute;
-  bottom: 50px; /* 화면 하단에 배치 */
-  transition: all 0.5s ease;
+  top: 100%; /* 화면 아래쪽에서 시작 */
+  left: 50%; /* 부모 컨테이너의 50% 지점 */
+  transform: translate(-50%, -50%); /* 정확히 정중앙 위치로 이동 */
+  width: 16%;
+  height: auto;
+  cursor: pointer;
+  animation: slideInFromBottom 1s ease-out forwards; /* 애니메이션 적용 */
+  opacity: 0; /* 초기 상태: 투명 */
+}
+
+/* 화면 아래에서 중앙으로 이동하는 애니메이션 */
+@keyframes slideInFromBottom {
+  from {
+    top: 100%; /* 화면 아래쪽 밖에서 시작 */
+    opacity: 0; /* 투명 상태 */
+  }
+  to {
+    top: 50%; /* 중앙으로 이동 */
+    opacity: 1; /* 불투명해짐 */
+  }
 }
 
 #fan-cards-container {
@@ -353,54 +415,165 @@ main {
 
 /* 팝업 창 스타일 */
 #popup-container {
-  position: fixed;
+  position: relative;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 화면 중앙 정렬 */
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px 30px; /* 상하 좌우 패딩 */
+  transform: translate(-50%, -50%);
+  background-color: #f8f9fa; /* 연한 배경색 */
+  border-radius: 15px; /* 더 둥근 모서리 */
+  padding: 30px; /* 더 넉넉한 패딩 */
   text-align: center;
-  width: 300px; /* 적절한 팝업 창 너비 */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  font-family: "Diphylleia", sans-serif; /* 텍스트 폰트 변경 */
+  width: 30%;
+  gap: 20px; /* 버튼 사이 간격 설정 */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3); /* 더 부드러운 그림자 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
 }
 
 /* 팝업 내용 텍스트 */
 #popup-container p {
-  margin-bottom: 20px; /* 텍스트와 버튼 사이 여백 */
-  font-size: 18px; /* 텍스트 크기 */
-  color: #44374d; /* 텍스트 색상 */
+  margin-bottom: 25px; /* 버튼과의 간격 */
+  font-size: 26px; /* 더 큰 텍스트 */
+  color: #44374d;
 }
 
 /* 팝업 버튼 컨테이너 */
 #popup-buttons {
+  position: absolute;
   display: flex;
-  justify-content: center; /* 버튼을 중앙에 정렬 */
-  gap: 15px; /* 버튼 간 간격 */
-  margin-top: 10px; /* 버튼 위쪽 여백 */
+  justify-content: center; /* 버튼 중앙 정렬 */
+  margin-top: 15px; /* 버튼 위 여백 */
 }
 
-/* 팝업 버튼 공통 스타일 */
+/* 팝업 버튼 스타일 */
 .popup-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: "Gamja Flower", cursive; /* 버튼 폰트 */
+  padding: 15px 40px; /* 위아래 15px, 좌우 40px로 넉넉하게 */
+  font-size: 24px;
+  font-family: "NanumBarunpen-Bold", Helvetica;
   color: white;
-  background-color: #44374d; /* 배경색 */
   border: none;
-  border-radius: 5px;
+  border-radius: 8px; /* 둥근 모서리 */
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: all 0.3s ease;
+  width: 200px; /* 버튼의 고정된 너비 설정 */
+  box-sizing: border-box; /* 패딩 포함하여 너비 유지 */
+}
+
+/* '다시 해볼까?' 버튼 스타일 */
+#btn-reselect {
+  margin-top: 15px; /* 버튼 위 여백 */
+  background-color: #c1b6c7; /* 연한 보라색 */
+  color: #fff; /* 글자 색상 */
+}
+
+/* '네!' 버튼 스타일 */
+#btn-confirm {
+  margin-top: 15px; /* 버튼 위 여백 */
+  background-color: #44374d; /* 진한 보라색 */
+  color: #fff;
 }
 
 /* 버튼 hover 효과 */
 .popup-btn:hover {
-  background-color: #704f87; /* hover 시 색상 변경 */
-  transform: scale(1.05); /* 버튼 살짝 확대 */
+  opacity: 0.9; /* 호버 시 약간 투명 */
+  transform: scale(1.05); /* 버튼 확대 */
 }
 
 /* 05 Menu */
+/* 전체 컨테이너 */
+#menu-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
+  gap: 0; /* 이미지와 내용 사이 간격 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
+}
+
+/* 카드 이미지 */
+#menu-card-image {
+  position: relative;
+  width: 50%;
+  height: auto;
+  border-radius: 10px; /* 이미지 모서리 둥글게 */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* 텍스트 컨텐츠 */
+#menu-content {
+  text-align: left;
+  color: #44374d;
+}
+
+#menu-card-number {
+  font-size: 30px;
+  color: #97a5b4;
+}
+
+#menu-card-title {
+  font-size: 70px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #2b2b2b;
+}
+
+#menu-card-korean {
+  font-size: 40px;
+  color: #97a5b4;
+}
+
+/* 버튼 컨테이너 */
+#menu-button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* 버튼 간격 */
+  margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.menu-popup-btn {
+  background: #f9fbff;
+  border: 2px solid #d6e7fe;
+  color: #78b2ff;
+  font-size: 30px;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.menu-popup-btn:hover {
+  background-color: #566ea1;
+  border-color: #d6e7fe;
+  color: #ecf2ff;
+  transform: scale(1.05);
+}
+
+/* 상단 텍스트 스타일 */
+#menu-top-text {
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  font-size: 24px;
+  color: #78b2ff;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* 하단 텍스트 스타일 */
+#menu-bottom-text {
+  position: absolute; /* 화면 하단 고정 */
+  bottom: 20px; /* 하단 여백 */
+  left: 50%; /* 가로 중앙 정렬 */
+  transform: translateX(-50%); /* 정확히 중앙으로 이동 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  font-size: 16px; /* 글자 크기 */
+  color: #a4bdcd; /* 텍스트 색상 */
+  text-align: center;
+  margin: 0;
+  z-index: 10; /* 다른 요소 위에 표시 */
+}
+
 /* 팝업 오버레이 */
 #menu-popup-overlay {
   position: fixed;
@@ -408,80 +581,61 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검은 배경 */
-  display: none; /* 기본적으로 숨김 */
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
   justify-content: center;
   align-items: center;
-  z-index: 999; /* 팝업이 다른 요소 위에 표시되도록 설정 */
+  z-index: 999;
 }
 
-/* 팝업 컨테이너 */
+/* 팝업 컨테이너 스타일 */
 #menu-popup-container {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* 화면 중앙 정렬 */
-  background-color: white;
-  border-radius: 10px;
-  padding: 20px; /* 내부 여백 */
+  top: 50%; /* 화면 상단에서 50% 위치 */
+  left: 50%; /* 화면 왼쪽에서 50% 위치 */
+  transform: translate(-50%, -50%); /* 정확한 중앙 정렬 */
+  background-color: #f8fbfc; /* 연한 배경색 */
+  padding: 40px 30px; /* 내부 여백 */
+  border-radius: 20px; /* 둥근 테두리 */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
   text-align: center;
-  width: 300px; /* 팝업 너비 */
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
+  max-width: 400px; /* 최대 너비 제한 */
+  width: 90%; /* 반응형 너비 */
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  z-index: 1000; /* 다른 요소 위에 표시 */
 }
 
-/* 팝업 내용 */
+/* 팝업 제목 스타일 */
+#menu-popup-content strong {
+  display: block;
+  font-size: 20px; /* 제목 폰트 크기 */
+  color: #9cb3d6; /* 연한 파란색 */
+  margin-bottom: 15px; /* 아래 여백 */
+}
+
+/* 팝업 내용 텍스트 */
 #menu-popup-content {
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: #44374d; /* 텍스트 색상 */
-  font-family: "Diphylleia", sans-serif; /* 폰트 */
+  font-size: 20px; /* 폰트 크기 */
+  color: #566ea1; /* 진한 회색 */
+  margin-bottom: 30px; /* 버튼과의 여백 */
 }
 
-/* 팝업 버튼 컨테이너 */
-#menu-popup-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
-/* 팝업 버튼 공통 스타일 */
-.menu-popup-btn {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-family: "Gamja Flower", cursive;
-  color: white;
-  background-color: #44374d;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* 버튼 hover 효과 */
-.menu-popup-btn:hover {
-  background-color: #704f87;
-  transform: scale(1.05);
-}
-
-/* 팝업 버튼 */
+/* 팝업 닫기 버튼 */
 #close-popup-btn {
-  padding: 10px 20px;
-  background-color: #44374d; /* 버튼 배경색 */
-  color: white; /* 버튼 텍스트 색상 */
+  background-color: #d6e7fe; /* 어두운 보라색 배경 */
+  color: #849bb9; /* 흰색 글씨 */
   border: none;
-  border-radius: 5px; /* 둥근 모서리 */
+  border-radius: 25px; /* 버튼 둥글게 */
+  padding: 10px 25px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-family: "Gamja Flower", cursive; /* 폰트 */
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-/* 버튼 hover 효과 */
 #close-popup-btn:hover {
-  background-color: #704f87; /* hover 시 색상 변경 */
-  transform: scale(1.05); /* 버튼 확대 효과 */
+  background-color: #566ea1; /* hover 시 밝은 보라색 */
+  transform: scale(1.05); /* 버튼 확대 */
 }
-
 /* 외부 요소 */
 /* BGM 버튼 */
 #bgm-toggle {
@@ -509,7 +663,7 @@ footer {
   justify-content: center;
   gap: 10px;
   padding: 10px;
-  background-color: rgb(225, 234, 255, 0.2);
+  background-color: #e0ebf3;
   width: 100%; /* 푸터가 전체 화면 너비를 차지하도록 설정 */
   box-sizing: border-box; /* 패딩 포함 */
 }
@@ -518,12 +672,14 @@ footer {
 button {
   padding: 10px 20px;
   font-size: 16px;
+  font-family: "NanumBarunpen-Bold", Helvetica;
+  color: #858586;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: #fff8fe;
+  background-color: #fbfdff;
 }
 
 button:hover {
-  background-color: #ddd;
+  background-color: #d0e4f1;
 }
